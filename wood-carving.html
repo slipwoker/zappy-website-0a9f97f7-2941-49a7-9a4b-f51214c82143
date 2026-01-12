@@ -2,7 +2,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="קורס woodturning חריטה בעץ מקצועי, יצירת פריטים אומנותיים ייחודיים ועבודות חריטה מותאמות אישית. למתחילים ומתקדמים.">
-  <meta name="keywords" content="קורס , עבודות אומנות בעץ, woodturning, חריטה אומנותית">
+  <meta name="keywords" content="קורס woodturning חריטה בעץ, חריטה בעץ, עבודות אומנות בעץ, woodturning, חריטה אומנותית">
   <title>קורס Woodturning חריטה בעץ מקצועי — סיסם עבודות עץ ייחודיות</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -66,8 +66,252 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
     <!-- Mickidum Accessibility Toolbar -->
     <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+<!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '0a9f97f7-2941-49a7-9a4b-f51214c82143',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
 
-
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
 
 <!-- Zappy Attribution Header -->
 <div id="zappy-attribution-header" class="zappy-header" style="display: none;">
@@ -97,8 +341,8 @@
       </button>
       
       <ul class="nav-menu" id="navMenu">
-        <li><a href="/outdoor-carpentry"><font color="#995817">נגרות חוץ</font></a></li>
-        <li><a href="/wood-carving"><font color="#804000">חריטה בעץ</font></a></li>
+        <li><a href="/outdoor-carpentry">נגרות חוץ</a></li>
+        <li><a href="/wood-carving">חריטה בעץ</a></li>
         <li><a href="/about">אודות</a></li>
       </ul>
       
@@ -107,9 +351,9 @@
           <a href="/contact" class="nav-cta-btn">צור קשר</a>
         </li>
     </div>
-  </div></nav>
+  </nav>
 
-  <section data-zappy-section="true" class="section">
+  <section style="margin: 0; padding: 0; font-family: system-ui, sans-serif; direction: rtl;" data-zappy-section="true" class="section">
 <style>
   @keyframes floatParticle {
     0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
@@ -378,7 +622,7 @@
     <div class="text-content">
       <div class="workshop-badge">אומנות מסורתית מודרנית</div>
       <h1 class="main-heading">
-        סדנאות <font color="#804000">חריטה בעץ</font>
+        סדנאות חריטה בעץ
         <span>woodturning</span>
       </h1>
       <h3 class="subheading">למדו אומנות עבודת יד מקצועית ויצרו פריטים ייחודיים משלכם</h3>
@@ -398,8 +642,8 @@
   <section class="carving-intro">
     <div class="container">
       <div class="intro-text">
-        <p><font color="#804000">חריטה בעץ</font> היא אומנות עתיקה שמשלבת מיומנות טכנית עם יצירתיות . בסיסם עבודות עץ ייחודיות, אנחנו מציעים קורס woodturning <font color="#804000">חריטה בעץ</font> מקצועי שמתאים גם למתחילים וגם למתקדמים שרוצים לשפר את הכישורים שלהם.</p>
-        <p>הקורס שלנו מלמד את כל היסודות של <font color="#804000">חריטה בעץ</font> - מהכרת הכלים והחומרים, דרך טכניקות חריטה בסיסיות, ועד ליצירת פריטים אומנותיים מורכבים. אנחנו מאמינים בלמידה מעשית ובליווי אישי שמאפשר לכל תלמיד להתקדם בקצב שלו ולפתח את הסגנון האישי שלו.</p>
+        <p>חריטה בעץ היא אומנות עתיקה שמשלבת מיומנות טכנית עם יצירתיות . בסיסם עבודות עץ ייחודיות, אנחנו מציעים קורס woodturning חריטה בעץ מקצועי שמתאים גם למתחילים וגם למתקדמים שרוצים לשפר את הכישורים שלהם.</p>
+        <p>הקורס שלנו מלמד את כל היסודות של חריטה בעץ - מהכרת הכלים והחומרים, דרך טכניקות חריטה בסיסיות, ועד ליצירת פריטים אומנותיים מורכבים. אנחנו מאמינים בלמידה מעשית ובליווי אישי שמאפשר לכל תלמיד להתקדם בקצב שלו ולפתח את הסגנון האישי שלו.</p>
       </div>
     </div>
   </section>
@@ -730,7 +974,7 @@
     <div class="container">
       <h2>עבודות חריטה מותאמות אישית</h2>
       <div class="custom-content">
-        <p>מעבר לקורס woodturning <font color="#804000">חריטה בעץ</font>, אנחנו גם מציעים שירותי חריטה מותאמות אישית למעצבי פנים, חובבי אומנות ולקוחות פרטיים. בין אם אתם מחפשים פריט דקורטיבי ייחודי לבית, מתנה מיוחדת, או אלמנט עיצובי לפרויקט מסוים - אנחנו יכולים ליצור אותו בדיוק לפי הדרישות שלכם.</p>
+        <p>מעבר לקורס woodturning חריטה בעץ, אנחנו גם מציעים שירותי חריטה מותאמות אישית למעצבי פנים, חובבי אומנות ולקוחות פרטיים. בין אם אתם מחפשים פריט דקורטיבי ייחודי לבית, מתנה מיוחדת, או אלמנט עיצובי לפרויקט מסוים - אנחנו יכולים ליצור אותו בדיוק לפי הדרישות שלכם.</p>
         <p>כל פריט נחרט בעבודת יד, תוך שימוש בסוגי עץ איכותיים ובטכניקות מתקדמות. אנחנו עובדים בשיתוף פעולה הדוק עם הלקוח כדי להבטיח שהתוצאה הסופית תואמת בדיוק את החזון המקורי.</p>
       </div>
       <div class="custom-examples">
@@ -760,7 +1004,7 @@
           <div class="testimonial-author">— רונית לוי, חובבת אומנות</div>
         </div>
         <div class="testimonial-card">
-          <p>"כמי שרצה ללמוד <font color="#804000">חריטה בעץ</font> כבר שנים, הקורס הזה היה בדיוק מה שחיפשתי. אווירה נעימה, ציוד מעולה וידע מקצועי."</p>
+          <p>"כמי שרצה ללמוד חריטה בעץ כבר שנים, הקורס הזה היה בדיוק מה שחיפשתי. אווירה נעימה, ציוד מעולה וידע מקצועי."</p>
           <div class="testimonial-author">— יוסי אברהם, תלמיד קורס</div>
         </div>
       </div>
@@ -770,7 +1014,7 @@
   <section class="cta-section">
     <div class="container">
       <div class="cta-content">
-        <h2>מוכנים להתחיל את המסע שלכם בעולם ה<font color="#804000">חריטה בעץ</font>?</h2>
+        <h2>מוכנים להתחיל את המסע שלכם בעולם החריטה בעץ?</h2>
         <p>צרו קשר עכשיו לפרטים נוספים על הקורס הקרוב או להזמנת עבודה מותאמת אישית.</p>
         <a href="/contact" class="btn-primary">צור קשר עכשיו</a>
       </div>
