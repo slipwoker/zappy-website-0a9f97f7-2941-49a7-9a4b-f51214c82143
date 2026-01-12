@@ -1,6 +1,4 @@
-# סיסם עבודות עץ ייחודיות — Generative Engine Optimization Map
-
-> A נגרות ועבודות עץ business.
+# Business — Generative Engine Optimization Map
 
 ---
 
@@ -44,17 +42,7 @@ Information about WCAG compliance and accessibility features.
 
 # Business Context (for LLM understanding)
 
-## About סיסם עבודות עץ ייחודיות
-סיסם עבודות עץ ייחודיות is a business in the נגרות ועבודות עץ industry.
-
-## Target Audience
-- אדריכלי נוף
-- בעלי בתים יוקרתיים
-- מעצבי פנים
-
-## Industry
-נגרות ועבודות עץ
-
+## About Business
 ---
 
 # Additional Resources
