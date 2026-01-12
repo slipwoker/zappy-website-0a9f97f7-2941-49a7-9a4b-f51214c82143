@@ -1,63 +1,51 @@
-# סיסם עבודות עץ ייחודיות — Generative Engine Optimization Map
-
-> A נגרות ועבודות עץ business.
+# Business — Generative Engine Optimization Map
 
 ---
 
 ## Pages
 
 ### דף הבית
-https://sisam-unique-woodworks.zappy5.app
+https://saysam.co.il
 גלו עבודות עץ ייחודיות ודקים מעוצבים בהתאמה אישית. פתרונות נגרות חוץ מקצועיים לאדריכלים ובעלי בתים יוקרתיים.
 
 ### נגרות חוץ
-https://sisam-unique-woodworks.zappy5.app/outdoor-carpentry
+https://saysam.co.il/outdoor-carpentry
 שירותי נגרות חוץ מקצועיים - דקים איכותיים, בניית פרגולות עץ מעוצבות וטימברפריים מעוצב לאדריכלים. פתרונות מותאמים אישית לבתים יוקרתיים.
 
 ### חריטה בעץ
-https://sisam-unique-woodworks.zappy5.app/wood-carving
+https://saysam.co.il/wood-carving
 קורס woodturning חריטה בעץ מקצועי, יצירת פריטים אומנותיים ייחודיים ועבודות חריטה מותאמות אישית. למתחילים ומתקדמים.
 
 ### אודות
-https://sisam-unique-woodworks.zappy5.app/about
+https://saysam.co.il/about
 הכירו את סיסם עבודות עץ ייחודיות - מומחים בדקים, בניית פרגולות עץ מעוצבות וחריטה בעץ. מעל עשור של ניסיון ומקצועיות.
 
 ### צור קשר
-https://sisam-unique-woodworks.zappy5.app/contact
+https://saysam.co.il/contact
 צרו קשר עם סיסם עבודות עץ ייחודיות לייעוץ חינם על דקים, בניית פרגולות עץ מעוצבות, קורס woodturning וכל שירותי הנגרות שלנו.
 
 ## Legal & Policy
 
 ### Privacy Policy
-https://sisam-unique-woodworks.zappy5.app/privacy
+https://saysam.co.il/privacy
 Information about how user data is collected, stored, and protected.
 
 ### Terms & Conditions
-https://sisam-unique-woodworks.zappy5.app/terms
+https://saysam.co.il/terms
 Legal terms describing service usage, rights, and policies.
 
 ### Accessibility Statement
-https://sisam-unique-woodworks.zappy5.app/accessibility
+https://saysam.co.il/accessibility
 Information about WCAG compliance and accessibility features.
 
 ---
 
 # Business Context (for LLM understanding)
 
-## About סיסם עבודות עץ ייחודיות
-סיסם עבודות עץ ייחודיות is a business in the נגרות ועבודות עץ industry.
-
-## Target Audience
-- אדריכלי נוף
-- בעלי בתים יוקרתיים
-- מעצבי פנים
-
-## Industry
-נגרות ועבודות עץ
-
+## About Business
 ---
 
 # Additional Resources
 
-- **Sitemap**: https://sisam-unique-woodworks.zappy5.app/sitemap.xml
-- **Robots.txt**: https://sisam-unique-woodworks.zappy5.app/robots.txt
+- **Sitemap**: https://saysam.co.il/sitemap.xml
+- **Robots.txt**: https://saysam.co.il/robots.txt

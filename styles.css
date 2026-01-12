@@ -2017,3 +2017,74 @@ body.accessibility-widget-visible ._access-menu {
     gap: 1rem !important;
   }
 }
+
+/* === AI CUSTOMIZATION ADDITIONS === */
+/* Hero section height adjustment to exactly 600px */
+.hero {
+  min-height: 600px !important;
+  height: 600px !important;
+  max-height: 600px !important;
+  overflow: hidden !important;
+}
+
+/* Ensure hero content is properly contained within 600px */
+.hero-content {
+  padding: 20px 40px !important;
+  max-height: 100% !important;
+  overflow: visible !important;
+}
+
+/* Adjust hero image to fit within 600px container */
+.hero-img {
+  height: 600px !important;
+  max-height: 600px !important;
+}
+
+/* Ensure hero overlay matches the 600px height */
+.hero-overlay {
+  height: 600px !important;
+  max-height: 600px !important;
+}
+
+/* Mobile adjustments for hero height */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 400px !important;
+    height: 400px !important;
+    max-height: 400px !important;
+  }
+  
+  .hero-img,
+  .hero-overlay {
+    height: 400px !important;
+    max-height: 400px !important;
+  }
+  
+  .hero-content {
+    padding: 20px !important;
+  }
+}
+
+/* === AI CUSTOMIZATION ADDITIONS === */
+/* Responsive benefits-grid for mobile and desktop */
+@media (max-width: 768px) {
+  .benefits-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .benefits-grid {
+    grid-template-columns: repeat(4, minmax(0px, 1fr)) !important;
+  }
+}
+
+/* Smooth transition for grid items */
+.benefits-grid {
+  transition: all 0.3s ease;
+}
+
+.benefit-item {
+  transition: all 0.3s ease;
+}

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sisam-unique-woodworks.zappy5.app/sitemap.xml
+Sitemap: https://saysam.co.il/sitemap.xml
