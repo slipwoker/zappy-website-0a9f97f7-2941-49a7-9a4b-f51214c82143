@@ -1,6 +1,4 @@
-# סיסם עבודות עץ ייחודיות — Generative Engine Optimization Map
-
-> A נגרות ועבודות עץ business.
+# Business — Generative Engine Optimization Map
 
 ---
 
@@ -22,13 +20,16 @@ https://saysam.co.il/wood-carving
 https://saysam.co.il/about
 הכירו את סיסם עבודות עץ ייחודיות - מומחים בדקים, בניית פרגולות עץ מעוצבות וחריטה בעץ. מעל עשור של ניסיון ומקצועיות.
 
-### גלריית עבודות - סיסם עבודות עץ ייחודיות
-https://saysam.co.il/gallery
-צפו בגלריית הפרויקטים שלנו: דקים איכותיים, בניית פרגולות עץ מעוצבות, עבודות חריטה בעץ וריהוט בהתאמה אישית. אומנות העץ במיטבה.
+### Page
+https://saysam.co.il/menu-group-1768299824504
 
 ### צור קשר — סיסם עבודות עץ ייחודיות
 https://saysam.co.il/contact
 צרו קשר עם סיסם עבודות עץ ייחודיות לייעוץ חינם על דקים, בניית פרגולות עץ מעוצבות, קורס woodturning וכל שירותי הנגרות שלנו.
+
+### גלריית עבודות - דקים, פרגולות ועבודות עץ ייחודיות | סיסם
+https://saysam.co.il/gallery
+צפו בגלריית הפרויקטים של סיסם עבודות עץ. תמונות של דקים איכותיים, בניית פרגולות עץ מעוצבות, חיפויי עץ ופרויקטים מיוחדים באדריכלות עץ.
 
 ## Legal & Policy
 
@@ -48,17 +49,7 @@ Information about WCAG compliance and accessibility features.
 
 # Business Context (for LLM understanding)
 
-## About סיסם עבודות עץ ייחודיות
-סיסם עבודות עץ ייחודיות is a business in the נגרות ועבודות עץ industry.
-
-## Target Audience
-- אדריכלי נוף
-- בעלי בתים יוקרתיים
-- מעצבי פנים
-
-## Industry
-נגרות ועבודות עץ
-
+## About Business
 ---
 
 # Additional Resources
