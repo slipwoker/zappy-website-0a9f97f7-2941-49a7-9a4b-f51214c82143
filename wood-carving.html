@@ -1,7 +1,210 @@
 <!DOCTYPE html><html lang="he" dir="rtl"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="קורס woodturning חריטה בעץ מקצועי, יצירת פריטים אומנותיים ייחודיים ועבודות חריטה מותאמות אישית. למתחילים ומתקדמים.">
+  <meta name="description" content="קורס woodturning חריטה בעץ מקצועי, יצירת פריטים אומנותיים ייחודיים ועבודות חריטה מותאמות אישית. למתחילים ומתקדמים."><!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '0a9f97f7-2941-49a7-9a4b-f51214c82143',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <link rel="stylesheet" href="/styles.css">
+</head><body>עבודות חריטה מותאמות אישית. למתחילים ומתקדמים."&gt;
   <meta name="keywords" content="קורס woodturning חריטה בעץ, חריטה בעץ, עבודות אומנות בעץ, woodturning, חריטה אומנותית">
   <title>קורס Woodturning חריטה בעץ מקצועי — סיסם עבודות עץ ייחודיות</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -475,211 +678,8 @@
               });
             })();
           </script>
-        <!-- Zappy Analytics -->
-<script>
-(function() {
-  'use strict';
-  
-  // Configuration
-  var config = {
-    websiteId: '0a9f97f7-2941-49a7-9a4b-f51214c82143',
-    apiUrl: 'https://api.zappy5.com/api/analytics/track',
-    sessionDuration: 30 * 60 * 1000, // 30 minutes
-    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
-    trackPageViews: true,
-    trackClicks: true,
-    trackFormSubmissions: true
-  };
-  
-  // Generate or retrieve persistent visitor ID (30 days)
-  function getVisitorId() {
-    var visitorKey = 'zappy_visitor_' + config.websiteId;
-    var visitor = null;
-    
-    try {
-      visitor = localStorage.getItem(visitorKey);
-      if (visitor) {
-        var visitorData = JSON.parse(visitor);
-        var now = Date.now();
         
-        // Check if visitor ID is still valid (30 days)
-        if (now - visitorData.created < config.visitorDuration) {
-          // Update last seen timestamp
-          visitorData.lastSeen = now;
-          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
-          return visitorData.id;
-        }
-      }
-    } catch (e) {
-      console.warn('Zappy Analytics: LocalStorage not available');
-    }
-    
-    // Generate new visitor ID
-    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    
-    try {
-      localStorage.setItem(visitorKey, JSON.stringify({
-        id: newVisitorId,
-        created: Date.now(),
-        lastSeen: Date.now()
-      }));
-    } catch (e) {
-      // Continue without local storage
-    }
-    
-    return newVisitorId;
-  }
-  
-  // Generate or retrieve session ID (30 minutes)
-  function getSessionId() {
-    var sessionKey = 'zappy_session_' + config.websiteId;
-    var session = null;
-    
-    try {
-      session = sessionStorage.getItem(sessionKey);
-      if (session) {
-        var sessionData = JSON.parse(session);
-        var now = Date.now();
-        
-        // Check if session is still valid
-        if (now - sessionData.timestamp < config.sessionDuration) {
-          // Update timestamp
-          sessionData.timestamp = now;
-          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
-          return sessionData.id;
-        }
-      }
-    } catch (e) {
-      console.warn('Zappy Analytics: SessionStorage not available');
-    }
-    
-    // Generate new session ID
-    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    
-    try {
-      sessionStorage.setItem(sessionKey, JSON.stringify({
-        id: newSessionId,
-        timestamp: Date.now()
-      }));
-    } catch (e) {
-      // Continue without session storage
-    }
-    
-    return newSessionId;
-  }
-  
-  var visitorId = getVisitorId();
-  var sessionId = getSessionId();
-  
-  // Track an event
-  function trackEvent(eventType, data) {
-    data = data || {};
-    
-    var eventData = {
-      website_id: config.websiteId,
-      event_type: eventType,
-      page_path: window.location.pathname,
-      referrer: document.referrer || 'direct',
-      visitor_id: visitorId,
-      session_id: sessionId,
-      metadata: data
-    };
-    
-    // Use sendBeacon if available (better for page unload events)
-    if (navigator.sendBeacon) {
-      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
-      navigator.sendBeacon(config.apiUrl, blob);
-    } else {
-      // Fallback to fetch
-      fetch(config.apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(eventData),
-        keepalive: true
-      }).catch(function(error) {
-        console.warn('Zappy Analytics: Failed to track event', error);
-      });
-    }
-  }
-  
-  // Track page view
-  if (config.trackPageViews) {
-    trackEvent('pageview', {
-      title: document.title,
-      url: window.location.href
-    });
-  }
-  
-  // Track clicks on important elements
-  if (config.trackClicks) {
-    document.addEventListener('click', function(e) {
-      var target = e.target;
-      
-      // Track button clicks (counted as actions)
-      if (target.tagName === 'BUTTON' || target.closest('button')) {
-        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
-        trackEvent('click', {
-          element: 'button',
-          text: button.textContent.trim().substring(0, 100),
-          id: button.id || null,
-          class: button.className || null
-        });
-      }
-      
-      // Track link clicks (navigation - not counted as actions)
-      else if (target.tagName === 'A' || target.closest('a')) {
-        var link = target.tagName === 'A' ? target : target.closest('a');
-        trackEvent('navigation', {
-          element: 'link',
-          text: link.textContent.trim().substring(0, 100),
-          href: link.href,
-          external: link.hostname !== window.location.hostname
-        });
-      }
-    }, true);
-  }
-  
-  // Track form submissions
-  if (config.trackFormSubmissions) {
-    document.addEventListener('submit', function(e) {
-      var form = e.target;
-      
-      trackEvent('form_submit', {
-        form_id: form.id || null,
-        form_name: form.name || null,
-        form_action: form.action || null,
-        form_method: form.method || 'GET'
-      });
-    }, true);
-  }
-  
-  // Track time on page (send on page unload)
-  var pageLoadTime = Date.now();
-  
-  window.addEventListener('beforeunload', function() {
-    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
-    
-    trackEvent('page_unload', {
-      time_on_page: timeOnPage,
-      page_path: window.location.pathname
-    });
-  });
-  
-  // Expose tracking function globally for custom events
-  window.zappyAnalytics = {
-    track: trackEvent,
-    getVisitorId: function() { return visitorId; },
-    getSessionId: function() { return sessionId; }
-  };
-  
-})();
-</script>
-<!-- End Zappy Analytics -->
-    <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
+
 
 <!-- Zappy Attribution Header -->
 <div id="zappy-attribution-header" class="zappy-header" style="display: none;">
@@ -1006,8 +1006,8 @@
   <section class="carving-intro">
     <div class="container">
       <div class="intro-text">
-        <p>חריטה בעץ היא אומנות עתיקה שמשלבת מיומנות טכנית עם יצירתיות . בסיסם עבודות עץ ייחודיות, אנחנו מציעים קורס woodturning חריטה בעץ מקצועי שמתאים גם למתחילים וגם למתקדמים שרוצים לשפר את הכישורים שלהם.</p>
-        <p>הקורס שלנו מלמד את כל היסודות של חריטה בעץ - מהכרת הכלים והחומרים, דרך טכניקות חריטה בסיסיות, ועד ליצירת פריטים אומנותיים מורכבים. אנחנו מאמינים בלמידה מעשית ובליווי אישי שמאפשר לכל תלמיד להתקדם בקצב שלו ולפתח את הסגנון האישי שלו.</p>
+        <p><font color="#b37436">חריטה בעץ היא אומנות עתיקה שמשלבת מיומנות טכנית עם יצירתיות . בסיסם עבודות עץ ייחודיות, אנחנו מציעים קורס woodturning חריטה בעץ מקצועי שמתאים גם למתחילים וגם למתקדמים שרוצים לשפר את הכישורים שלהם.</font></p>
+        <p><font color="#b37436">הקורס שלנו מלמד את כל היסודות של חריטה בעץ - מהכרת הכלים והחומרים, דרך טכניקות חריטה בסיסיות, ועד ליצירת פריטים אומנותיים מורכבים. אנחנו מאמינים בלמידה מעשית ובליווי אישי שמאפשר לכל תלמיד להתקדם בקצב שלו ולפתח את הסגנון האישי שלו.</font></p>
       </div>
     </div>
   </section>
@@ -1309,19 +1309,19 @@
     <h2 class="benefits-title">למה לבחור בקורס שלנו?</h2>
     
     <div class="benefits-grid zappy-preserve-css-grid zappy-inline-grid-active zappy-item-component" data-original-item-width="292" data-original-gap="48px" data-zappy-explicit-columns="true" id="zappy-auto-grid-1768211196355-710nkt" data-zappy-auto-grid="true"><div class="benefit-card">
-        <img src="/assets/business-general-service-upload-1768212937976.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: none; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-7fd8416xz" class="zappy-editable-image" data-resize-handler-attached="true" data-original-position="static">
+        <img src="/assets/business-general-service-upload-1768212937976.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: none; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-7fd8416xz" class="zappy-editable-image" data-original-position="static">
         <h3 class="">הדרכה אישית</h3>
         <p class="">יחידים וזוגות עם ליווי צמוד ותשומת לב אישית לכל תלמיד<br>התקדמות בהתאם ליכולות אישיות</p>
       </div><div class="benefit-card">
-        <img src="/assets/business-general-service-upload-1768213067745.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-px2ig4xty" class="zappy-editable-image" data-resize-handler-attached="true" data-original-position="static">
+        <img src="/assets/business-general-service-upload-1768213067745.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-px2ig4xty" class="zappy-editable-image" data-original-position="static">
         <h3 class="">ציוד מקצועי</h3>
         <p class="">כל הכלים והציוד הדרושים מסופקים - רק תבואו מוכנים ללמוד.</p>
       </div><div class="benefit-card">
-        <img src="/assets/business-general-service-upload-1768213098806.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-bcyccnwu1" class="zappy-editable-image" data-resize-handler-attached="true" data-original-position="static">
+        <img src="/assets/business-general-service-upload-1768213098806.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-bcyccnwu1" class="zappy-editable-image" data-original-position="static">
         <h3 class="">גמישות בזמנים</h3>
         <p class="">מגוון מועדים שמתאימים לכל לוח זמנים - בוקר, צהריים וערב.</p>
       </div><div class="benefit-card" style="background-color: rgb(255, 255, 255) !important; padding: 48px 32px !important; box-sizing: border-box;">
-        <img src="/assets/business-general-service-upload-1768213483699.webp" alt="Image placeholder" style="margin-bottom: 24px; position: relative;   width: 75px;  max-width: 100%; display: block; margin-left: auto; margin-right: auto; cursor: pointer; object-position: 50% 50%;" data-element-type="image" data-element-id="new-grid-img-1768213273131-0-pgsx21adl" class="zappy-editable-image" data-resize-handler-attached="true" data-original-position="static" id="new-grid-img-1768213273131-0-pgsx21adl" data-placeholder="image-placeholder" data-ai-slot="grid-item-image">
+        <img src="/assets/business-general-service-upload-1768213483699.webp" alt="Image placeholder" style="margin-bottom: 24px; position: relative;   width: 75px;  max-width: 100%; display: block; margin-left: auto; margin-right: auto; cursor: pointer; object-position: 50% 50%;" data-element-type="image" data-element-id="new-grid-img-1768213273131-0-pgsx21adl" class="zappy-editable-image" data-original-position="static" id="new-grid-img-1768213273131-0-pgsx21adl" data-placeholder="image-placeholder" data-ai-slot="grid-item-image">
         <h3 class="" style="cursor: text;">ניסיון והשראה</h3>
         <p class="" style="cursor: text;">נסיון של שנים ביצירה והדרכה ומתן תשומת לב להתפתחות אישית של כל תלמיד</p>
       </div></div>
@@ -1336,13 +1336,13 @@
 
   <section class="custom-work">
     <div class="container">
-      <h2>עבודות חריטה מותאמות אישית</h2>
+      <h2><font color="#b37436">עבודות חריטה מותאמות אישית</font></h2>
       <div class="custom-content">
-        <p>מעבר לקורס woodturning חריטה בעץ, אנחנו גם מציעים שירותי חריטה מותאמות אישית למעצבי פנים, חובבי אומנות ולקוחות פרטיים. בין אם אתם מחפשים פריט דקורטיבי ייחודי לבית, מתנה מיוחדת, או אלמנט עיצובי לפרויקט מסוים - אנחנו יכולים ליצור אותו בדיוק לפי הדרישות שלכם.</p>
-        <p>כל פריט נחרט בעבודת יד, תוך שימוש בסוגי עץ איכותיים ובטכניקות מתקדמות. אנחנו עובדים בשיתוף פעולה הדוק עם הלקוח כדי להבטיח שהתוצאה הסופית תואמת בדיוק את החזון המקורי.</p>
+        <p><font color="#b37436">מעבר לקורס woodturning חריטה בעץ, אנחנו גם מציעים שירותי חריטה מותאמות אישית למעצבי פנים, חובבי אומנות ולקוחות פרטיים. בין אם אתם מחפשים פריט דקורטיבי ייחודי לבית, מתנה מיוחדת, או אלמנט עיצובי לפרויקט מסוים - אנחנו יכולים ליצור אותו בדיוק לפי הדרישות שלכם.</font></p>
+        <p><font color="#b37436">כל פריט נחרט בעבודת יד, תוך שימוש בסוגי עץ איכותיים ובטכניקות מתקדמות. אנחנו עובדים בשיתוף פעולה הדוק עם הלקוח כדי להבטיח שהתוצאה הסופית תואמת בדיוק את החזון המקורי.</font></p>
       </div>
       <div class="custom-examples">
-        <h3>דוגמאות לעבודות שאנחנו יוצרים:</h3>
+        <h3><font color="#b37436">דוגמאות לעבודות שאנחנו יוצרים:</font></h3>
         <ul class="examples-list">
           <li><i class="fas fa-check"></i> קערות ואגרטלים אומנותיים</li>
           <li><i class="fas fa-check"></i> פמוטים וחפצי נוי מעוצבים</li>
@@ -1357,7 +1357,7 @@
 
   <section class="testimonials">
     <div class="container">
-      <h2>מה אומרים הלקוחות שלנו</h2>
+      <h2><font color="#b37436">מה אומרים הלקוחות שלנו</font></h2>
       <div class="testimonials-grid">
         <div class="testimonial-card">
           <p>"הקורס היה חוויה מדהימה! למדתי כישורים חדשים ויצרתי פריטים שאני ממש גאה בהם. ההדרכה הייתה מקצועית וסבלנית."</p>
