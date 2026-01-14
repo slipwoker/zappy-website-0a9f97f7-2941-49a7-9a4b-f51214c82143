@@ -1,8 +1,211 @@
 <!DOCTYPE html><html lang="he" dir="rtl"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="שירותי נגרות חוץ מקצועיים - דקים איכותיים, בניית פרגולות עץ מעוצבות וטימברפריים מעוצב לאדריכלים. פתרונות מותאמים אישית לבתים יוקרתיים.">
-  <meta name="keywords" content="דקים, בניית פרגולות עץ מעוצבות, טימברפריים , נגרות חוץ, עבודות עץ לחוץ">
+  <meta name="description" content="שירותי נגרות חוץ מקצועיים - דקים איכותיים, בניית פרגולות עץ מעוצבות וטימברפריים מעוצב לאדריכלים. פתרונות מותאמים אישית לבתים יוקרתיים."><!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '0a9f97f7-2941-49a7-9a4b-f51214c82143',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <link rel="stylesheet" href="/styles.css">
+</head><body>בניית פרגולות עץ מעוצבות וטימבר פריים . פתרונות מותאמים אישית לבתים יוקרתיים."&gt;
+  <meta name="keywords" content="דקים, <font color=" #000000"="">בניית פרגולות עץ מעוצבות, טימברפריים , נגרות חוץ, עבודות עץ לחוץ"&gt;
   <title>שירותי נגרות חוץ מקצועיים ודקים מעוצבים — סיסם עבודות עץ ייחודיות</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -475,211 +678,8 @@
               });
             })();
           </script>
-      <!-- Zappy Analytics -->
-<script>
-(function() {
-  'use strict';
-  
-  // Configuration
-  var config = {
-    websiteId: '0a9f97f7-2941-49a7-9a4b-f51214c82143',
-    apiUrl: 'https://api.zappy5.com/api/analytics/track',
-    sessionDuration: 30 * 60 * 1000, // 30 minutes
-    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
-    trackPageViews: true,
-    trackClicks: true,
-    trackFormSubmissions: true
-  };
-  
-  // Generate or retrieve persistent visitor ID (30 days)
-  function getVisitorId() {
-    var visitorKey = 'zappy_visitor_' + config.websiteId;
-    var visitor = null;
-    
-    try {
-      visitor = localStorage.getItem(visitorKey);
-      if (visitor) {
-        var visitorData = JSON.parse(visitor);
-        var now = Date.now();
-        
-        // Check if visitor ID is still valid (30 days)
-        if (now - visitorData.created < config.visitorDuration) {
-          // Update last seen timestamp
-          visitorData.lastSeen = now;
-          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
-          return visitorData.id;
-        }
-      }
-    } catch (e) {
-      console.warn('Zappy Analytics: LocalStorage not available');
-    }
-    
-    // Generate new visitor ID
-    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    
-    try {
-      localStorage.setItem(visitorKey, JSON.stringify({
-        id: newVisitorId,
-        created: Date.now(),
-        lastSeen: Date.now()
-      }));
-    } catch (e) {
-      // Continue without local storage
-    }
-    
-    return newVisitorId;
-  }
-  
-  // Generate or retrieve session ID (30 minutes)
-  function getSessionId() {
-    var sessionKey = 'zappy_session_' + config.websiteId;
-    var session = null;
-    
-    try {
-      session = sessionStorage.getItem(sessionKey);
-      if (session) {
-        var sessionData = JSON.parse(session);
-        var now = Date.now();
-        
-        // Check if session is still valid
-        if (now - sessionData.timestamp < config.sessionDuration) {
-          // Update timestamp
-          sessionData.timestamp = now;
-          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
-          return sessionData.id;
-        }
-      }
-    } catch (e) {
-      console.warn('Zappy Analytics: SessionStorage not available');
-    }
-    
-    // Generate new session ID
-    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    
-    try {
-      sessionStorage.setItem(sessionKey, JSON.stringify({
-        id: newSessionId,
-        timestamp: Date.now()
-      }));
-    } catch (e) {
-      // Continue without session storage
-    }
-    
-    return newSessionId;
-  }
-  
-  var visitorId = getVisitorId();
-  var sessionId = getSessionId();
-  
-  // Track an event
-  function trackEvent(eventType, data) {
-    data = data || {};
-    
-    var eventData = {
-      website_id: config.websiteId,
-      event_type: eventType,
-      page_path: window.location.pathname,
-      referrer: document.referrer || 'direct',
-      visitor_id: visitorId,
-      session_id: sessionId,
-      metadata: data
-    };
-    
-    // Use sendBeacon if available (better for page unload events)
-    if (navigator.sendBeacon) {
-      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
-      navigator.sendBeacon(config.apiUrl, blob);
-    } else {
-      // Fallback to fetch
-      fetch(config.apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(eventData),
-        keepalive: true
-      }).catch(function(error) {
-        console.warn('Zappy Analytics: Failed to track event', error);
-      });
-    }
-  }
-  
-  // Track page view
-  if (config.trackPageViews) {
-    trackEvent('pageview', {
-      title: document.title,
-      url: window.location.href
-    });
-  }
-  
-  // Track clicks on important elements
-  if (config.trackClicks) {
-    document.addEventListener('click', function(e) {
-      var target = e.target;
       
-      // Track button clicks (counted as actions)
-      if (target.tagName === 'BUTTON' || target.closest('button')) {
-        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
-        trackEvent('click', {
-          element: 'button',
-          text: button.textContent.trim().substring(0, 100),
-          id: button.id || null,
-          class: button.className || null
-        });
-      }
-      
-      // Track link clicks (navigation - not counted as actions)
-      else if (target.tagName === 'A' || target.closest('a')) {
-        var link = target.tagName === 'A' ? target : target.closest('a');
-        trackEvent('navigation', {
-          element: 'link',
-          text: link.textContent.trim().substring(0, 100),
-          href: link.href,
-          external: link.hostname !== window.location.hostname
-        });
-      }
-    }, true);
-  }
-  
-  // Track form submissions
-  if (config.trackFormSubmissions) {
-    document.addEventListener('submit', function(e) {
-      var form = e.target;
-      
-      trackEvent('form_submit', {
-        form_id: form.id || null,
-        form_name: form.name || null,
-        form_action: form.action || null,
-        form_method: form.method || 'GET'
-      });
-    }, true);
-  }
-  
-  // Track time on page (send on page unload)
-  var pageLoadTime = Date.now();
-  
-  window.addEventListener('beforeunload', function() {
-    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
-    
-    trackEvent('page_unload', {
-      time_on_page: timeOnPage,
-      page_path: window.location.pathname
-    });
-  });
-  
-  // Expose tracking function globally for custom events
-  window.zappyAnalytics = {
-    track: trackEvent,
-    getVisitorId: function() { return visitorId; },
-    getSessionId: function() { return sessionId; }
-  };
-  
-})();
-</script>
-<!-- End Zappy Analytics -->
-    <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
+
 <!-- Zappy Attribution Header -->
 <div id="zappy-attribution-header" class="zappy-header" style="display: none;">
   <p>Happily created by&nbsp;<a href="https://zappy5.com" target="_blank" rel="noopener noreferrer" class="zappy-link">Zappy</a></p>
@@ -727,7 +727,7 @@
   <section class="services-intro">
     <div class="container">
       <div class="intro-text">
-        <p>בסיסם עבודות עץ ייחודיות, אנחנו מתמחים ביצירת פתרונות נגרות חוץ יוקרתיים שמשלבים עיצוב מתוחכם עם ביצוע מקצועי. הדקים שלנו, <font color="#995817">בניית פרגולות עץ מעוצבות</font> והטימברפריים המעוצב לאדריכלים הופכים כל חלל חוץ למרחב חיים ייחודי ומזמין.</p>
+        <p>בסיסם עבודות עץ ייחודיות, אנחנו מתמחים ביצירת פתרונות נגרות חוץ יוקרתיים שמשלבים עיצוב מתוחכם עם ביצוע מקצועי. הדקים שלנו, <font color="#995817"><font color="#000000">בניית פרגולות עץ מעוצבות</font></font> והטימברפריים המעוצב לאדריכלים הופכים כל חלל חוץ למרחב חיים ייחודי ומזמין.</p>
         <p>אנחנו עובדים בשיתוף פעולה הדוק עם אדריכלי נוף, מעצבי פנים ובעלי בתים יוקרתיים כדי להבטיח שכל פרויקט מתאים בדיוק לחזון ולצרכים הספציפיים. עם מעל עשור של ניסיון בתחום, אנחנו מביאים מומחיות טכנית לצד תשומת לב לפרטים האסתטיים הקטנים ביותר.</p>
       </div>
     </div>
@@ -744,18 +744,18 @@
           <p>כל דק מתוכנן בקפידה כדי להתאים למבנה הבית, לסגנון הגינה ולצרכי השימוש - בין אם מדובר בדק סביב בריכה, דק מרפסת או דק גג נרחב. אנחנו דואגים לכל הפרטים הטכניים כמו ניקוז נכון, יציבות מבנית וגימור מושלם.</p>
         </div>
         <div class="service-detail-image">
-          <img data-placeholder="service-7" data-context="High-quality wooden deck installation with precise joinery and weatherproof finish in luxury Israeli home" src="/assets/service-service-7-1768208428136-yc9z4l.webp" alt="דקים איכותיים ועמידים לחוץ" class="service-img zappy-editable-image" data-element-type="image" data-element-id="img-1768398978564-2ajmufl0x" data-resize-handler-attached="true" data-original-position="static" style="position: relative;">
+          <img data-placeholder="service-7" data-context="High-quality wooden deck installation with precise joinery and weatherproof finish in luxury Israeli home" src="/assets/business-general-service-upload-1768403129708.webp" alt="דקים איכותיים ועמידים לחוץ" class="service-img zappy-editable-image" data-element-type="image" data-element-id="img-1768398978564-2ajmufl0x" data-original-position="static" style="position: relative; object-position: 50% 50%; width: auto; max-width: 600px; display: block; margin: 24px; object-fit: contain; height: auto; border-radius: 8px;">
         </div>
       </div>
       
       <div class="service-detail reverse">
         <div class="service-detail-content">
-          <h3><font color="#995817">בניית פרגולות עץ מעוצבות</font></h3>
-          <p>הפרגולות שלנו הן יותר מסתם צל - הן מרכיב עיצובי מרכזי שמגדיר את אופי חלל החוץ. אנחנו מתכננים ובונים פרגולות עץ מעוצבות בהתאמה אישית מלאה, תוך התחשבות בסגנון הבית, בצרכי השימוש ובתקציב.</p>
-          <p>בין אם אתם מחפשים פרגולה קלאסית עם קורות עץ מסיביות, פרגולה מודרנית עם קווים נקיים, או פרגולה משולבת עם מערכות תאורה ואלמנטים נוספים - אנחנו יוצרים פתרון שמתאים בדיוק לכם. כל פרגולה בנויה מחומרים איכותיים ומטופלת בציפויים מתקדמים לעמידות ארוכת שנים</p>
+          <h3 style="text-align: right;"><font color="#995817"><font color="#000000">בניית פרגולות עץ מעוצבות</font></font></h3>
+          <p style="text-align: right;">הפרגולות שלנו הן יותר מסתם צל - הן מרכיב עיצובי מרכזי שמגדיר את אופי חלל החוץ. אנחנו מתכננים ובונים פרגולות עץ מעוצבות בהתאמה אישית מלאה, תוך התחשבות בסגנון הבית, בצרכי השימוש ובתקציב.</p>
+          <p style="text-align: right;">בין אם אתם מחפשים פרגולה קלאסית עם קורות עץ מסיביות, פרגולה מודרנית עם קווים נקיים, או פרגולה משולבת עם מערכות תאורה ואלמנטים נוספים - אנחנו יוצרים פתרון שמתאים בדיוק לכם. כל פרגולה בנויה מחומרים איכותיים ומטופלת בציפויים מתקדמים לעמידות ארוכת שנים</p>
         </div>
         <div class="service-detail-image">
-            <img data-placeholder="service-8" data-context="Custom designed wooden pergola with modern architectural elements and integrated shade system" src="/assets/service-service-8-1768208458612-c4s8c1.webp" alt="בניית פרגולות עץ מעוצבות מותאמות אישית" class="service-img zappy-editable-image" data-element-type="image" data-element-id="img-1768398978564-t5f30kqur" data-resize-handler-attached="true" data-original-position="static" style="position: relative;">
+            <img data-placeholder="service-8" data-context="Custom designed wooden pergola with modern architectural elements and integrated shade system" src="/assets/business-general-service-upload-1768403151808.webp" alt="<font color=" #000000"="">בניית פרגולות עץ מעוצבות מותאמות אישית" class="service-img zappy-editable-image" data-element-type="image" data-element-id="img-1768398978564-t5f30kqur" data-original-position="static" style="position: relative; object-position: 50% 50%; width: auto; max-width: 600px; display: block; margin: 24px; object-fit: contain; height: auto; border-radius: 8px;" data-resize-handler-attached="true"&gt;
         </div>
       </div>
       
@@ -766,7 +766,7 @@
           <p>אנחנו עובדים בשיתוף פעולה הדוק עם אדריכלי נוף ומתכננים כדי להבטיח שהטימברפריים משתלב באופן מושלם בתכנון הכולל של הפרויקט. כל חיבור מבוצע בדיוק מקסימלי, עם תשומת לב לחוזק המבנה ולאסתטיקה הויזואלית.</p>
         </div>
         <div class="service-detail-image">
-          <img data-placeholder="service-7" data-context="Architectural timber frame structure with exposed wooden beams and modern design for landscape project src=" assets="" service-service-7.webp"="" alt="טימברפריימים ופרויקטים מורכבים" class="service-img zappy-editable-image" data-element-type="image" data-element-id="img-1768398978564-9gq4kjhyu" data-resize-handler-attached="true" src="/assets/image-service-7-1768399009290-y4st3p.webp" data-original-position="static" style="min-width: 200px; min-height: 150px; cursor: pointer; border-radius: 8px; position: relative; object-position: 50% 50%; object-fit: contain; width: auto; height: auto; max-width: 100%; display: block; margin: 24px auto;">
+          <img data-placeholder="service-7" data-context="Architectural timber frame structure with exposed wooden beams and modern design for landscape project src=" assets="" service-service-7.webp"="" alt="טימברפריימים ופרויקטים מורכבים" class="service-img zappy-editable-image" data-element-type="image" data-element-id="img-1768398978564-9gq4kjhyu" src="/assets/business-general-service-upload-1768403180533.webp" data-original-position="static" style="min-width: 200px; min-height: 150px; cursor: pointer; border-radius: 8px; position: relative; object-position: 50% 50%; object-fit: contain; width: auto; height: auto; max-width: 600px; display: block; margin: 24px;">
         </div>
       </div>
     </div>
