@@ -1,7 +1,14 @@
-<!DOCTYPE html><html lang="he" dir="rtl"><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="קורס woodturning חריטה בעץ מקצועי, יצירת פריטים אומנותיים ייחודיים ועבודות חריטה מותאמות אישית. למתחילים ומתקדמים."><!-- Zappy Analytics -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>קורס Woodturning חריטה בעץ מקצועי — סיסם עבודות עץ ייחודיות</title>
+    <meta name="description" content="קורס woodturning חריטה בעץ מקצועי, יצירת פריטים אומנותיים ייחודיים ועבודות חריטה מותאמות אישית. למתחילים ומתקדמים.">
+    <meta name="keywords" content="קורס woodturning חריטה בעץ, חריטה בעץ, עבודות אומנות בעץ, woodturning, חריטה אומנותית">
+    
+    <!-- Zappy Analytics -->
 <script>
 (function() {
   'use strict';
@@ -203,20 +210,67 @@
 })();
 </script>
 <!-- End Zappy Analytics -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/styles.css">
-</head><body>עבודות חריטה מותאמות אישית. למתחילים ומתקדמים."&gt;
-  <meta name="keywords" content="קורס woodturning חריטה בעץ, חריטה בעץ, עבודות אומנות בעץ, woodturning, חריטה אומנותית">
-  <title>קורס Woodturning חריטה בעץ מקצועי — סיסם עבודות עץ ייחודיות</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: 44px !important; background: transparent !important; border: none !important; cursor: pointer !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+</head>
+<body>
+<!DOCTYPE ><html lang="he" dir="rtl"><head>
+  <meta charset="UTF-8"></meta>
+    <title>קורס Woodturning חריטה בעץ מקצועי — סיסם עבודות עץ ייחודיות</title>
+    <meta name="keywords" content="קורס woodturning חריטה בעץ, חריטה בעץ, עבודות אומנות בעץ, woodturning, חריטה אומנותית"></meta>
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+  <meta name="description" content="קורס woodturning חריטה בעץ מקצועי, יצירת פריטים אומנותיים ייחודיים ו<font color=" #b37436"=""></meta></head><body><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></link>
 
     <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
-    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"></link>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"></link>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"></link>
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48x48.png"></link>
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192x192.png"></link>
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512x512.png"></link>
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"></link>
 <style>
 /* Zappy Attribution Header Styles */
 .zappy-header {
@@ -265,7 +319,7 @@
   opacity: 0.7;
 }</style>
     <!-- Cookie Consent -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css"></link>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
     <!-- Mickidum Accessibility Toolbar -->
     <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
@@ -295,8 +349,8 @@
             }
             
             /* Menu Group styling (non-clickable parent) - TOP LEVEL ONLY with ultra-specific selector */
-            .nav-menu > li > .menu-group-title,
-            #navMenu > li > .menu-group-title {
+            .nav-menu &amp;gt; li &amp;gt; .menu-group-title,
+            #navMenu &amp;gt; li &amp;gt; .menu-group-title {
               display: inline-block !important;
               padding: 0.5rem 1rem !important;
               color: var(--nav-color) !important;
@@ -310,13 +364,13 @@
               transition: color 0.3s ease !important;
             }
             
-            .nav-menu > li > .menu-group-title:hover,
-            #navMenu > li > .menu-group-title:hover {
+            .nav-menu &amp;gt; li &amp;gt; .menu-group-title:hover,
+            #navMenu &amp;gt; li &amp;gt; .menu-group-title:hover {
               color: var(--nav-hover-color) !important;
             }
             
             /* Desktop: show submenu on Menu Group hover */
-            li:has(.menu-group-title):hover > .sub-menu {
+            li:has(.menu-group-title):hover &amp;gt; .sub-menu {
               opacity: 1 !important;
               visibility: visible !important;
               transform: translateY(0) !important;
@@ -325,7 +379,7 @@
             
             /* Hide menu items marked as hidden (overrides hover states) */
             .zappy-hidden-menu-item,
-            li:has(.menu-group-title):hover > .sub-menu .zappy-hidden-menu-item {
+            li:has(.menu-group-title):hover &amp;gt; .sub-menu .zappy-hidden-menu-item {
               display: none !important;
               opacity: 0 !important;
               visibility: hidden !important;
@@ -378,9 +432,9 @@
             }
             
             /* Show submenu on parent hover - more specific selectors */
-            .nav-menu li:hover > .sub-menu,
-            nav li:hover > .sub-menu,
-            .navbar li:hover > .sub-menu {
+            .nav-menu li:hover &amp;gt; .sub-menu,
+            nav li:hover &amp;gt; .sub-menu,
+            .navbar li:hover &amp;gt; .sub-menu {
               opacity: 1 !important;
               visibility: visible !important;
               transform: translateY(0) !important;
@@ -418,8 +472,8 @@
             }
             
             /* CRITICAL: Override submenu styles for TOP-LEVEL Menu Groups only - must come AFTER submenu styles */
-            .nav-menu > li > .menu-group-title,
-            #navMenu > li > .menu-group-title {
+            .nav-menu &amp;gt; li &amp;gt; .menu-group-title,
+            #navMenu &amp;gt; li &amp;gt; .menu-group-title {
               display: inline-block !important;
               padding: 0.5rem 1rem !important;
               color: var(--nav-color) !important;
@@ -433,8 +487,8 @@
               transition: color 0.3s ease !important;
             }
             
-            .nav-menu > li > .menu-group-title:hover,
-            #navMenu > li > .menu-group-title:hover {
+            .nav-menu &amp;gt; li &amp;gt; .menu-group-title:hover,
+            #navMenu &amp;gt; li &amp;gt; .menu-group-title:hover {
               color: var(--nav-hover-color) !important;
               background-color: transparent !important;
             }
@@ -475,18 +529,18 @@
               }
               
               /* Disable hover behavior on mobile */
-              .nav-menu li:hover > .sub-menu,
-              nav li:hover > .sub-menu,
-              .navbar li:hover > .sub-menu {
+              .nav-menu li:hover &amp;gt; .sub-menu,
+              nav li:hover &amp;gt; .sub-menu,
+              .navbar li:hover &amp;gt; .sub-menu {
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
               }
               
               /* Enable visibility for expanded submenus */
-              .nav-menu li > .sub-menu.mobile-expanded,
-              nav li > .sub-menu.mobile-expanded,
-              .navbar li > .sub-menu.mobile-expanded {
+              .nav-menu li &amp;gt; .sub-menu.mobile-expanded,
+              nav li &amp;gt; .sub-menu.mobile-expanded,
+              .navbar li &amp;gt; .sub-menu.mobile-expanded {
                 opacity: 1 !important;
                 visibility: visible !important;
                 pointer-events: auto !important;
@@ -512,11 +566,11 @@
               }
               
               /* Parent link - takes most space, allows navigation */
-              .nav-menu li:has(.sub-menu) > a,
-              nav li:has(.sub-menu) > a,
-              .navbar li:has(.sub-menu) > a,
-              .nav-menu > li > .menu-group-title,
-              #navMenu > li > .menu-group-title {
+              .nav-menu li:has(.sub-menu) &amp;gt; a,
+              nav li:has(.sub-menu) &amp;gt; a,
+              .navbar li:has(.sub-menu) &amp;gt; a,
+              .nav-menu &amp;gt; li &amp;gt; .menu-group-title,
+              #navMenu &amp;gt; li &amp;gt; .menu-group-title {
                 flex: 1 !important;
               }
               
@@ -553,9 +607,9 @@
               }
               
               /* Submenu takes full width below parent */
-              .nav-menu li:has(.sub-menu) > .sub-menu,
-              nav li:has(.sub-menu) > .sub-menu,
-              .navbar li:has(.sub-menu) > .sub-menu {
+              .nav-menu li:has(.sub-menu) &amp;gt; .sub-menu,
+              nav li:has(.sub-menu) &amp;gt; .sub-menu,
+              .navbar li:has(.sub-menu) &amp;gt; .sub-menu {
                 flex-basis: 100% !important;
                 width: 100% !important;
               }
@@ -575,10 +629,10 @@
             (function() {
               function initMobileMenuToggles() {
                 // Only run on mobile
-                if (window.innerWidth > 768) {
+                if (window.innerWidth &amp;gt; 768) {
                   // Remove any toggle buttons on desktop
-                  document.querySelectorAll('.mobile-submenu-toggle').forEach(btn => btn.remove());
-                  document.querySelectorAll('.sub-menu.mobile-expanded').forEach(menu => {
+                  document.querySelectorAll('.mobile-submenu-toggle').forEach(btn =&amp;gt; btn.remove());
+                  document.querySelectorAll('.sub-menu.mobile-expanded').forEach(menu =&amp;gt; {
                     menu.classList.remove('mobile-expanded');
                   });
                   console.log('[MOBILE MENU] Desktop mode - cleanup done');
@@ -601,7 +655,7 @@
                   }
                   
                   const submenu = li.querySelector('.sub-menu');
-                  const parentLink = li.querySelector(':scope > a') || li.querySelector(':scope > .menu-group-title');
+                  const parentLink = li.querySelector(':scope &amp;gt; a') || li.querySelector(':scope &amp;gt; .menu-group-title');
                   
                   if (!submenu || !parentLink) return;
                   
@@ -661,7 +715,7 @@
               // This handles cases where the mobile menu is hidden initially
               const observer = new MutationObserver(function(mutations) {
                 mutations.forEach(function(mutation) {
-                  if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                  if (mutation.type === 'attributes' &amp;amp;&amp;amp; mutation.attributeName === 'class') {
                     const target = mutation.target;
                     if (target.classList.contains('active') || target.style.display !== 'none') {
                       console.log('[MOBILE MENU] Mobile menu became visible, re-initializing...');
@@ -683,27 +737,27 @@
 
 <!-- Zappy Attribution Header -->
 <div id="zappy-attribution-header" class="zappy-header" style="display: none;">
-  <p>Happily created by&nbsp;<a href="https://zappy5.com" target="_blank" rel="noopener noreferrer" class="zappy-link">Zappy</a></p>
+  <p>Happily created by&amp;amp;nbsp;<a href="https://zappy5.com" target="_blank" rel="noopener noreferrer" class="zappy-link">Zappy</a></p>
 </div>
   <nav class="navbar" id="navbar">
     <div class="container nav-container">
       <div class="nav-brand">
         <a href="/" class="logo-link">
-          <img id="img-1768212031841-bcyccnwu1" src="/assets/business-general-service-upload-1768213806246.webp" alt="סיסם עבודות עץ ייחודיות" style="width: 75px; height: auto; border-radius: 8px; max-width: 100%; object-fit: cover; object-position: 50% 50%;" data-element-type="image" data-element-id="img-1768212031841-bcyccnwu1" width="300" data-placeholder="element">
+          <img id="img-1768212031841-bcyccnwu1" src="assets/business-general-service-upload-1768213806246.webp" alt="סיסם עבודות עץ ייחודיות" style="width: 75px; height: auto; border-radius: 8px; max-width: 100%; object-fit: cover; object-position: 50% 50%;" data-element-type="image" data-element-id="img-1768212031841-bcyccnwu1" width="300" data-placeholder="element"></img>
         </a>
       </div>
       
       <button class="mobile-toggle" id="mobileToggle" aria-label="תפריט">
-        <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <svg class="hamburger-icon" width="24" height="24" viewbox="0 0 24 24" fill="none">
           <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
         </svg>
-        <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+        <svg class="close-icon" width="24" height="24" viewbox="0 0 24 24" fill="none" style="display: none;">
           <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
         </svg>
       </button>
       
       <button class="phone-header-btn" aria-label="התקשר אלינו">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
         </svg>
       </button>
@@ -968,7 +1022,7 @@
   }
 </style>
 
-<div class="hero-workshop" style="background-image: url(&quot;assets/business-general-service-upload-1768204737693.webp&quot;);  background-size: cover; background-position: center;">
+<div class="hero-workshop" style="background-image: url(&amp;amp;quot;assets/business-general-service-upload-1768204737693.webp&amp;amp;quot;);  background-size: cover; background-position: center;">
   <div class="floating-particles">
     <div class="particle"></div>
     <div class="particle"></div>
@@ -1278,7 +1332,7 @@
 </style>
 
 <div class="courses-section">
-  <div class="hero-banner zappy-editable-bg-image" style="background-image: url(&quot;assets/business-general-service-upload-1768141334901.webp&quot;);  background-size: cover; background-position: center;">
+  <div class="hero-banner zappy-editable-bg-image" style="background-image: url(&amp;amp;quot;assets/business-general-service-upload-1768141334901.webp&amp;amp;quot;);  background-size: cover; background-position: center;">
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h2 class=""><font color="#f5f5dc">מה כוללות הסדנאות שלנו?</font></h2>
@@ -1286,19 +1340,19 @@
       <div class="courses-grid">
         <div class="course-card">
           <div class="course-title">סדנת היכרות חוויתית</div>
-          <p class="course-description">הכרת מחרטת העץ, כלי החיתוך השונים, ועקרונות הבטיחות החשובים. תלמדו איך להכין את החומר לעבודה, ואיך לתפעל את המחרטה בצורה בטוחה ויעילה.  בשלב הזה נתרגל טכניקות בסיסיות כמו חיתוך, עיצוב וליטוש. כל תלמיד יקבל הדרכה אישית ויתרגל על פרויקט פשוט שמבסס את הידע והביטחון.<br>*<br>משך הסדנה - מפגש אחד<br>3 שעות<br></p>
+          <p class="course-description">הכרת מחרטת העץ, כלי החיתוך השונים, ועקרונות הבטיחות החשובים. תלמדו איך להכין את החומר לעבודה, ואיך לתפעל את המחרטה בצורה בטוחה ויעילה.  בשלב הזה נתרגל טכניקות בסיסיות כמו חיתוך, עיצוב וליטוש. כל תלמיד יקבל הדרכה אישית ויתרגל על פרויקט פשוט שמבסס את הידע והביטחון.<br></br><br></br>*<br></br><br></br>משך הסדנה - מפגש אחד<br></br><br></br>3 שעות<br></br><br></br></p>
           
         </div>
 
         <div class="course-card">
-          <div class="course-title">סדנה מתקדמת -&nbsp;<br>4 מפגשים&nbsp;</div>
-          <p class="course-description">הכרת מחרטת העץ, כלי החיתוך השונים, ועקרונות הבטיחות החשובים. תלמדו איך להכין את החומר לעבודה, ואיך לתפעל את המחרטה בצורה בטוחה ויעילה.נתרגל טכניקות בסיסיות כמו חיתוך, עיצוב וליטוש. כל תלמיד יקבל הדרכה אישית ויתרגל על פרויקט אחד שיתאים ל 4 מפגשים או מספר פרויקטים, בהתאם ליכולות של כל תלמיד.<br>*<br>משך הסדנה - 4 מפגשים<br>3 שעות כל מפגש<br></p>
+          <div class="course-title">סדנה מתקדמת -&amp;amp;nbsp;<br></br><br></br>4 מפגשים&amp;amp;nbsp;</div>
+          <p class="course-description">הכרת מחרטת העץ, כלי החיתוך השונים, ועקרונות הבטיחות החשובים. תלמדו איך להכין את החומר לעבודה, ואיך לתפעל את המחרטה בצורה בטוחה ויעילה.נתרגל טכניקות בסיסיות כמו חיתוך, עיצוב וליטוש. כל תלמיד יקבל הדרכה אישית ויתרגל על פרויקט אחד שיתאים ל 4 מפגשים או מספר פרויקטים, בהתאם ליכולות של כל תלמיד.<br></br><br></br>*<br></br><br></br>משך הסדנה - 4 מפגשים<br></br><br></br>3 שעות כל מפגש<br></br><br></br></p>
           
         </div>
 
         <div class="course-card">
           <div class="course-title">סדנת עומק - 10 מפגשים</div>
-          <p class="course-description">הכרת מחרטת העץ, כלי החיתוך השונים, ועקרונות הבטיחות החשובים. תלמדו איך להכין את החומר לעבודה, ואיך לתפעל את המחרטה בצורה בטוחה ויעילה.נתרגל טכניקות בסיסיות כמו חיתוך, עיצוב וליטוש. כל תלמיד יקבל הדרכה אישית ויתרגל על פרויקט אחד שיתאים ל 10 מפגשים או מספר פרויקטים, בהתאם ליכולות של כל תלמיד.נלמד על השחזות של סכיני החריטהעמידה/יציבה נכונה וטכניקות מתקדמות לגופים חלוליםכירסום עץ וגילוף, סוגי גימורים.<br>*<br>משך הסדנה - 10 מפגשים<br>3 שעות כל מפגש<br></p>
+          <p class="course-description">הכרת מחרטת העץ, כלי החיתוך השונים, ועקרונות הבטיחות החשובים. תלמדו איך להכין את החומר לעבודה, ואיך לתפעל את המחרטה בצורה בטוחה ויעילה.נתרגל טכניקות בסיסיות כמו חיתוך, עיצוב וליטוש. כל תלמיד יקבל הדרכה אישית ויתרגל על פרויקט אחד שיתאים ל 10 מפגשים או מספר פרויקטים, בהתאם ליכולות של כל תלמיד.נלמד על השחזות של סכיני החריטהעמידה/יציבה נכונה וטכניקות מתקדמות לגופים חלוליםכירסום עץ וגילוף, סוגי גימורים.<br></br><br></br>*<br></br><br></br>משך הסדנה - 10 מפגשים<br></br><br></br>3 שעות כל מפגש<br></br><br></br></p>
           
         </div>
       </div>
@@ -1309,19 +1363,19 @@
     <h2 class="benefits-title">למה לבחור בקורס שלנו?</h2>
     
     <div class="benefits-grid zappy-preserve-css-grid zappy-inline-grid-active zappy-item-component" data-original-item-width="292" data-original-gap="48px" data-zappy-explicit-columns="true" id="zappy-auto-grid-1768211196355-710nkt" data-zappy-auto-grid="true"><div class="benefit-card">
-        <img src="/assets/business-general-service-upload-1768212937976.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: none; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-7fd8416xz" class="zappy-editable-image" data-original-position="static">
+        <img src="assets/business-general-service-upload-1768212937976.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: none; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-7fd8416xz" class="zappy-editable-image" data-original-position="static"></img>
         <h3 class="">הדרכה אישית</h3>
-        <p class="">יחידים וזוגות עם ליווי צמוד ותשומת לב אישית לכל תלמיד<br>התקדמות בהתאם ליכולות אישיות</p>
+        <p class="">יחידים וזוגות עם ליווי צמוד ותשומת לב אישית לכל תלמיד<br></br><br></br>התקדמות בהתאם ליכולות אישיות</p>
       </div><div class="benefit-card">
-        <img src="/assets/business-general-service-upload-1768213067745.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-px2ig4xty" class="zappy-editable-image" data-original-position="static">
+        <img src="assets/business-general-service-upload-1768213067745.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-px2ig4xty" class="zappy-editable-image" data-original-position="static"></img>
         <h3 class="">ציוד מקצועי</h3>
         <p class="">כל הכלים והציוד הדרושים מסופקים - רק תבואו מוכנים ללמוד.</p>
       </div><div class="benefit-card">
-        <img src="/assets/business-general-service-upload-1768213098806.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-bcyccnwu1" class="zappy-editable-image" data-original-position="static">
+        <img src="assets/business-general-service-upload-1768213098806.webp" alt="סיסם עבודות עץ ייחודיות" style="margin-bottom: 24px; position: relative; object-fit: cover; object-position: 50% 50%; width: 75px; height: auto; max-width: 100%; display: block; margin-left: auto; margin-right: auto;" data-element-type="image" data-element-id="img-1768212031841-bcyccnwu1" class="zappy-editable-image" data-original-position="static"></img>
         <h3 class="">גמישות בזמנים</h3>
         <p class="">מגוון מועדים שמתאימים לכל לוח זמנים - בוקר, צהריים וערב.</p>
       </div><div class="benefit-card" style="background-color: rgb(255, 255, 255) !important; padding: 48px 32px !important; box-sizing: border-box;">
-        <img src="/assets/business-general-service-upload-1768213483699.webp" alt="Image placeholder" style="margin-bottom: 24px; position: relative;   width: 75px;  max-width: 100%; display: block; margin-left: auto; margin-right: auto; cursor: pointer; object-position: 50% 50%;" data-element-type="image" data-element-id="new-grid-img-1768213273131-0-pgsx21adl" class="zappy-editable-image" data-original-position="static" id="new-grid-img-1768213273131-0-pgsx21adl" data-placeholder="image-placeholder" data-ai-slot="grid-item-image">
+        <img src="assets/business-general-service-upload-1768213483699.webp" alt="Image placeholder" style="margin-bottom: 24px; position: relative;   width: 75px;  max-width: 100%; display: block; margin-left: auto; margin-right: auto; cursor: pointer; object-position: 50% 50%;" data-element-type="image" data-element-id="new-grid-img-1768213273131-0-pgsx21adl" class="zappy-editable-image" data-original-position="static" id="new-grid-img-1768213273131-0-pgsx21adl" data-placeholder="image-placeholder" data-ai-slot="grid-item-image"></img>
         <h3 class="" style="cursor: text;">ניסיון והשראה</h3>
         <p class="" style="cursor: text;">נסיון של שנים ביצירה והדרכה ומתן תשומת לב להתפתחות אישית של כל תלמיד</p>
       </div></div>
@@ -1415,7 +1469,7 @@
           </div>
         </div>
         <div class="zappy-attribution">
-          <p>נוצר באמצעות&nbsp;<a href="https://zappy5.com" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Zappy</a></p>
+          <p>נוצר באמצעות&amp;amp;nbsp;<a href="https://zappy5.com" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Zappy</a></p>
         </div>
       </div>
     </footer>
@@ -1444,14 +1498,14 @@
         var header = document.getElementById('zappy-attribution-header');
         if (header) {
           // Use dynamic announcement content if available
-          if (data.announcement && data.announcement.html) {
+          if (data.announcement &amp;amp;&amp;amp; data.announcement.html) {
             header.innerHTML = data.announcement.html;
           }
           // Apply fixed positioning styles inline (works for existing sites too)
           header.style.cssText = 'position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; z-index: 99999 !important; display: flex !important; justify-content: center !important; align-items: center !important; text-align: center !important; box-sizing: border-box !important;';
           // Fix child elements that might have position: fixed from old CSS
           var children = header.querySelectorAll('*');
-          for (var i = 0; i < children.length; i++) {
+          for (var i = 0; i &amp;lt; children.length; i++) {
             children[i].style.position = 'static';
           }
           // Get header height
@@ -1459,9 +1513,9 @@
           // Find and fix navbar to be fixed as well (prevents gap at top of page)
           var navSelectors = ['nav', '.navbar', '.nav'];
           var navbar = null;
-          for (var j = 0; j < navSelectors.length; j++) {
+          for (var j = 0; j &amp;lt; navSelectors.length; j++) {
             navbar = document.querySelector(navSelectors[j]);
-            if (navbar && navbar.id !== 'zappy-attribution-header') break;
+            if (navbar &amp;amp;&amp;amp; navbar.id !== 'zappy-attribution-header') break;
             navbar = null;
           }
           if (navbar) {
@@ -1479,57 +1533,29 @@
     });
 })();
 </script>
-    <div data-integration="accessibility:toolbar"></div>
-
+    <div data-integration="accessibility:toolbar"></div></body></html>
+    <script src="/script.js"></script>
     <script id="zappy-mobile-submenu-script">
     (function() {
       function initMobileSubmenuToggles() {
-        if (window.innerWidth > 768) {
-          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
-          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
-          return;
-        }
-        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
-        items.forEach(function(li) {
+        if (window.innerWidth > 768) { document.querySelectorAll('.mobile-submenu-toggle').forEach(function(b){b.remove();}); document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(m){m.classList.remove('mobile-expanded');}); return; }
+        document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)').forEach(function(li) {
           if (li.querySelector('.mobile-submenu-toggle')) return;
-          var submenu = li.querySelector('.sub-menu');
-          var parentLink = li.querySelector(':scope > a');
-          if (!submenu || !parentLink) return;
-          var toggleBtn = document.createElement('button');
-          toggleBtn.className = 'mobile-submenu-toggle';
-          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
-          toggleBtn.setAttribute('type', 'button');
-          parentLink.insertAdjacentElement('afterend', toggleBtn);
-          toggleBtn.addEventListener('click', function(e) {
-            e.preventDefault(); e.stopPropagation();
-            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
-              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
-            });
-            submenu.classList.toggle('mobile-expanded');
-            toggleBtn.classList.toggle('expanded');
+          var sm = li.querySelector('.sub-menu'), pl = li.querySelector(':scope > a') || li.querySelector(':scope > .menu-group-title');
+          if (!sm || !pl) return;
+          var tb = document.createElement('button'); tb.className = 'mobile-submenu-toggle'; tb.setAttribute('aria-label', 'Toggle submenu'); tb.setAttribute('type', 'button');
+          pl.insertAdjacentElement('afterend', tb);
+          tb.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(m) { if (m !== sm) { m.classList.remove('mobile-expanded'); var t = m.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }});
+            sm.classList.toggle('mobile-expanded'); tb.classList.toggle('expanded');
           });
         });
       }
-      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
-      else { initMobileSubmenuToggles(); }
-      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
-      // Re-initialize when mobile menu becomes visible (MutationObserver)
-      var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.type === 'attributes') {
-            var target = mutation.target;
-            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
-              setTimeout(initMobileSubmenuToggles, 100);
-            }
-          }
-        });
-      });
-      setTimeout(function() {
-        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
-          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
-        });
-      }, 500);
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); } else { initMobileSubmenuToggles(); }
+      window.addEventListener('resize', function() { clearTimeout(window._mrt); window._mrt = setTimeout(initMobileSubmenuToggles, 250); });
+      var observer = new MutationObserver(function(mutations) { mutations.forEach(function(mutation) { if (mutation.type === 'attributes') { var target = mutation.target; if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) { setTimeout(initMobileSubmenuToggles, 100); } } }); });
+      setTimeout(function() { document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) { observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] }); }); }, 500);
     })();
     </script>
-    <script src="/script.js"></script>
-</body></html>
+</body>
+</html>
