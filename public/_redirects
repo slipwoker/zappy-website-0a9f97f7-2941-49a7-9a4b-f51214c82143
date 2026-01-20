@@ -1,5 +1,5 @@
 # Clean URL redirects for Render static hosting
-# Generated: 2026-01-20T08:52:42.054Z
+# Generated: 2026-01-20T08:57:37.863Z
 # These rewrite rules show clean URLs to users while serving .html files
 
 /outdoor-carpentry  /outdoor-carpentry.html  200!
