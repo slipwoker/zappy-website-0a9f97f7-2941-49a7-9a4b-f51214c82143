@@ -1,6 +1,7 @@
 # Clean URL redirects for Render static hosting
-# Generated: 2026-01-20T08:57:37.863Z
-# These rewrite rules show clean URLs to users while serving .html files
+# Generated: 2026-01-21T11:02:53.382Z
+# NOTE: Render uses render.yaml for routing, not _redirects (that is Netlify)
+# This file is kept for reference only
 
 /outdoor-carpentry  /outdoor-carpentry.html  200!
 /wood-carving  /wood-carving.html  200!
@@ -19,5 +20,5 @@
 
 /  /index.html  200!
 
-# 404 fallback
-/*  /index.html  404
+# SPA fallback - serve index.html for all unmatched routes
+/*  /index.html  200
