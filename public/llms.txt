@@ -49,6 +49,27 @@ Information about WCAG compliance and accessibility features.
 
 ---
 
+## How to Contact Us
+
+- Email: nitzangera@gmail.com
+- Phone: 0524748816
+- Phone (tel): tel:0524748816
+- Address: כפר אוריה, כפר אוריה
+
+### Contact form
+- URL: https://saysam.co.il/contact
+- Endpoint: https://saysam.co.il/api/email/contact-form
+- Method: POST
+- Content-Type: application/json
+- Fields:
+  - `name` (text, required)
+  - `email` (email, required)
+  - `phone` (tel, required)
+  - `service` (select)
+  - `message` (textarea)
+
+---
+
 # Business Context (for LLM understanding)
 
 ## About סיסם עבודות עץ ייחודיות
@@ -64,7 +85,8 @@ Information about WCAG compliance and accessibility features.
 
 ---
 
-# Additional Resources
+# Machine-readable feeds
 
-- **Sitemap**: https://saysam.co.il/sitemap.xml
-- **Robots.txt**: https://saysam.co.il/robots.txt
+- Sitemap (XML): https://saysam.co.il/sitemap.xml
+- Robots: https://saysam.co.il/robots.txt
+- Flattened page text (for LLMs): https://saysam.co.il/llms-full.txt
